@@ -6,9 +6,12 @@ import {
     UpdateDateColumn,
     Index,
     Generated,
-    OneToOne
+    OneToOne,
+    JoinColumn
 } from 'typeorm';
+
 import { UserDevice } from '../models';
+import { UserFile } from '../models';
 
 @Entity('users')
 export class User {
@@ -44,4 +47,14 @@ export class User {
 
     @OneToOne(() => UserDevice, device => device.user)
     device: UserDevice;
+
+    @Column({ nullable: true })
+    profilePicId: number;
+
+
+    @OneToOne(() => UserFile, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: "profilePicId" })
+    profilePic: UserFile;
+
+    
 }

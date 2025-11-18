@@ -10,23 +10,12 @@ import { Service } from './Service';
 import { AdminToken } from './AdminToken';
 import { AdminFile } from './AdminFile';
 import { File } from './File';
+import { UserToken } from './UserToken';
+import { UserOtp } from './UserOtp';
+import { UserFile } from './UserFile';
 // import { Product } from './Product';
 
-// Export all entities as an array for TypeORM configuration
-export const entities = [
-    User,
-    UserDevice,
-    UserAddress,
-    Car,
-    CarCategory,
-    CarMake,
-    AdminUser,
-    Banner,
-    Service,
-    AdminToken,
-    AdminFile,
-    File
-];
+
 
 // Entities owned by this microservice (managed by migrations here)
 export const ownedEntities = [
@@ -39,7 +28,13 @@ export const ownedEntities = [
         Service,
         AdminToken,
         AdminFile,
-        File
+        File,
+        UserDevice,
+        UserAddress,    
+        User,
+        UserToken,
+        UserOtp,
+        UserFile
 
 ];
 
@@ -55,5 +50,9 @@ export { Banner,type Banner as BannerType} from './Banner'
 export { Service, type Service as ServiceType } from './Service';
 export { AdminToken, type AdminToken as AdminTokenType } from './AdminToken';
 export { AdminFile, type AdminFile as AdminFileType } from './AdminFile';
-export { File, type File as FileType } from './File';
+export { File, type File as FileType } from './File';   
+export { UserToken, type UserToken as UserTokenType } from './UserToken';
+export { UserOtp, type UserOtp as UserOtpType } from './UserOtp';
+export { UserFile, type UserFile as UserFileType } from './UserFile';
+// export { Product, type Product as ProductType } from './Product';
 
