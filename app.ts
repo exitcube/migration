@@ -1,10 +1,9 @@
 import Fastify from "fastify";
 import mult from "@fastify/multipart";
-import typeormPlugin from "./plugins/typeorm";
 import cors from "@fastify/cors"; // REMOVE ON PRODUCTION
-import errorHandlerPlugin from "./plugins/errorHandler";
-import routes from "./routes/root";
-import userDevicePlugin from "./plugins/user";
+ 
+
+ 
 
 
 export async function buildApp() {
@@ -18,12 +17,8 @@ export async function buildApp() {
     origin: "*",
   });
   await fastify.register(mult)
-  await fastify.register(typeormPlugin);
-  await fastify.register(errorHandlerPlugin);
-  await fastify.register(userDevicePlugin);
-
-  // Register routes
-  await fastify.register(routes);
+  
+  
 
 
   return fastify;
