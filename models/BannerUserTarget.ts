@@ -9,9 +9,9 @@ import {
   ManyToOne,
   Index,
 } from "typeorm";
-import { AdminUser, Banner, User } from "../models";
+import { Banner, User } from "../models";
 
-Entity("bannerUserTarget");
+@Entity("bannerUserTarget")
 export class BannerUserTarget {
   @PrimaryGeneratedColumn()
   id: number;

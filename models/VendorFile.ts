@@ -19,7 +19,7 @@ import {
   
     @Column({ name: "userId" })
     @Index()
-    VendorId: number;
+    vendorId: number;
   
     @ManyToOne(() => Vendor, { onDelete: "CASCADE" })
     @JoinColumn({ name: "vendorId" })

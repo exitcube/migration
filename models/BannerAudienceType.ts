@@ -12,7 +12,7 @@ import {
 import { Banner } from "./Banner";
 import { BannerUserTargetConfig } from "./BannerUserTargetConfig";
 
-Entity("bannerAudienceType");
+@Entity("bannerAudienceType")
 export class BannerAudienceType {
   @PrimaryGeneratedColumn()
   id: number;

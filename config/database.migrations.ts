@@ -1,7 +1,7 @@
 import path from 'path';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { ENV } from './env';
-import { ownedEntities } from '../models';
+import { entities } from '../models';
 
 const baseConfig: DataSourceOptions = {
     type: 'postgres',
@@ -10,7 +10,7 @@ const baseConfig: DataSourceOptions = {
     username: process.env.DB_USERNAME || 'postgres',
     password: process.env.DB_PASSWORD || 'password',
     database: process.env.DB_NAME || 'shinr_user_mgmt',
-    entities: ownedEntities,
+    entities: entities,
     migrations: [path.join(__dirname, '../migrations/*.{ts,js}')],
     synchronize: false,
     logging: ENV.NODE_ENV === 'development',

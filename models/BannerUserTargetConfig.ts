@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn,Column,CreateDateColumn,UpdateDateColumn,JoinColumn,OneToOne,ManyToOne, Index } from "typeorm";
 import { AdminUser } from '../models';
 
-Entity("bannerUserTargetConfig");
+@Entity("bannerUserTargetConfig")
 export class BannerUserTargetConfig {
   @PrimaryGeneratedColumn()
   id: number;
