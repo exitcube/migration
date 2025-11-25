@@ -18,6 +18,7 @@ import { VendorFile } from "./VendorFile";
 import { BannerAudienceType } from "./BannerAudienceType";
 import { BannerUserTarget } from "./BannerUserTarget";
 import { BannerUserTargetConfig } from "./BannerUserTargetConfig";
+import { ServiceList } from "./ServiceList";
 // import { Product } from './Product';
 
 // Entities owned by this microservice (managed by migrations here)
@@ -42,6 +43,7 @@ export const entities = [
   BannerAudienceType,
   BannerUserTarget,
   BannerUserTargetConfig,
+  ServiceList
 ];
 
 // Export individual entities and types
@@ -60,4 +62,5 @@ export { File, type File as FileType } from "./File";
 export { UserToken, type UserToken as UserTokenType } from "./UserToken";
 export { UserOtp, type UserOtp as UserOtpType } from "./UserOtp";
 export { UserFile, type UserFile as UserFileType } from "./UserFile";
+export { ServiceList, type ServiceList as ServiceListType } from "./ServiceList";
 // export { Product, type Product as ProductType } from './Product';
