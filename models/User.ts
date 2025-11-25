@@ -54,7 +54,7 @@ export class User {
 
     @OneToOne(() => UserFile, { onDelete: 'CASCADE' })
     @JoinColumn({ name: "profilePicId" })
-    profilePic: UserFile;
+    userFile: UserFile;
 
     
 }

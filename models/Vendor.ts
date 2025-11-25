@@ -37,7 +37,7 @@ export class Vendor {
 
   @OneToOne(() => VendorFile, { onDelete: "CASCADE" })
   @JoinColumn({ name: "profilePicId" })
-  profilePic: VendorFile;
+  vendorFile: VendorFile;
 
   @Column({ nullable: true })
   vendorCode: string;
