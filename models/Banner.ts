@@ -15,7 +15,7 @@ export class Banner {
 
   @OneToOne(() => AdminFile, { onDelete: "CASCADE" })
   @JoinColumn({ name: "bgImageId" })
-  bgImage: AdminFile;
+  adminFile: AdminFile;
 
   @Column({ type: "text", nullable: true })
   text: string;

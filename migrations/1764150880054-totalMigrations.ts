@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class TotalMigration1764055383965 implements MigrationInterface {
-    name = 'TotalMigration1764055383965'
+export class TotalMigrations1764150880054 implements MigrationInterface {
+    name = 'TotalMigrations1764150880054'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TABLE "users" ("id" SERIAL NOT NULL, "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying, "email" character varying, "mobile" character varying NOT NULL, "isActive" boolean NOT NULL DEFAULT false, "lastActive" TIMESTAMP, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "profilePicId" integer, CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "UQ_d376a9f93bba651f32a2c03a7d3" UNIQUE ("mobile"), CONSTRAINT "REL_92dd04533a2383d8cd834233fd" UNIQUE ("profilePicId"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`);
@@ -47,6 +47,7 @@ export class TotalMigration1764055383965 implements MigrationInterface {
         await queryRunner.query(`CREATE TABLE "bannerUserTarget" ("id" SERIAL NOT NULL, "bannerId" integer, "userId" integer, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT false, CONSTRAINT "PK_fb0090cb23dbbcf7f1cca5ecb73" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_37a8903c29e0e8e9fc8c05dd05" ON "bannerUserTarget" ("bannerId") `);
         await queryRunner.query(`CREATE INDEX "IDX_60ec9b8aa048ea5afa3b2af420" ON "bannerUserTarget" ("userId") `);
+        await queryRunner.query(`CREATE TABLE "serviceList" ("id" SERIAL NOT NULL, "displayName" character varying NOT NULL, "value" character varying NOT NULL, "image" character varying, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT false, "imageId" integer, CONSTRAINT "PK_d44cd9a6971e3273bb7422994a6" PRIMARY KEY ("id"))`);
         await queryRunner.query(`ALTER TABLE "users" ADD CONSTRAINT "FK_92dd04533a2383d8cd834233fd1" FOREIGN KEY ("profilePicId") REFERENCES "userFile"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "userDevice" ADD CONSTRAINT "FK_9f3c9ae281195c7c59cb694980a" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "userAddress" ADD CONSTRAINT "FK_8b251cbfcbf880bcdec80cf36c5" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
@@ -73,9 +74,11 @@ export class TotalMigration1764055383965 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "bannerAudienceType" ADD CONSTRAINT "FK_036633ca90752bce52556aca274" FOREIGN KEY ("bannerConfigId") REFERENCES "bannerUserTargetConfig"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "bannerUserTarget" ADD CONSTRAINT "FK_37a8903c29e0e8e9fc8c05dd05f" FOREIGN KEY ("bannerId") REFERENCES "banner"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "bannerUserTarget" ADD CONSTRAINT "FK_60ec9b8aa048ea5afa3b2af420e" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "serviceList" ADD CONSTRAINT "FK_6be7f833a43dd4da18c62813edb" FOREIGN KEY ("imageId") REFERENCES "adminfile"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`ALTER TABLE "serviceList" DROP CONSTRAINT "FK_6be7f833a43dd4da18c62813edb"`);
         await queryRunner.query(`ALTER TABLE "bannerUserTarget" DROP CONSTRAINT "FK_60ec9b8aa048ea5afa3b2af420e"`);
         await queryRunner.query(`ALTER TABLE "bannerUserTarget" DROP CONSTRAINT "FK_37a8903c29e0e8e9fc8c05dd05f"`);
         await queryRunner.query(`ALTER TABLE "bannerAudienceType" DROP CONSTRAINT "FK_036633ca90752bce52556aca274"`);
@@ -102,6 +105,7 @@ export class TotalMigration1764055383965 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "userAddress" DROP CONSTRAINT "FK_8b251cbfcbf880bcdec80cf36c5"`);
         await queryRunner.query(`ALTER TABLE "userDevice" DROP CONSTRAINT "FK_9f3c9ae281195c7c59cb694980a"`);
         await queryRunner.query(`ALTER TABLE "users" DROP CONSTRAINT "FK_92dd04533a2383d8cd834233fd1"`);
+        await queryRunner.query(`DROP TABLE "serviceList"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_60ec9b8aa048ea5afa3b2af420"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_37a8903c29e0e8e9fc8c05dd05"`);
         await queryRunner.query(`DROP TABLE "bannerUserTarget"`);
