@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class NewUpdatedMigration1764663037524 implements MigrationInterface {
-    name = 'NewUpdatedMigration1764663037524'
+export class TotalUpdatedMigration1764663547624 implements MigrationInterface {
+    name = 'TotalUpdatedMigration1764663547624'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TABLE "users" ("id" SERIAL NOT NULL, "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying, "email" character varying, "mobile" character varying NOT NULL, "isActive" boolean NOT NULL DEFAULT false, "lastActive" TIMESTAMP, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "profilePicId" integer, CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "UQ_d376a9f93bba651f32a2c03a7d3" UNIQUE ("mobile"), CONSTRAINT "REL_92dd04533a2383d8cd834233fd" UNIQUE ("profilePicId"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`);
@@ -25,7 +25,7 @@ export class NewUpdatedMigration1764663037524 implements MigrationInterface {
         await queryRunner.query(`CREATE INDEX "IDX_673d3529cb9c30b92d01f1be03" ON "vendorFile" ("fileId") `);
         await queryRunner.query(`CREATE TABLE "vendor" ("id" SERIAL NOT NULL, "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying, "email" character varying, "mobile" character varying, "isActive" boolean NOT NULL DEFAULT false, "lastActive" TIMESTAMP, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "profilePicId" integer, "vendorCode" character varying, CONSTRAINT "UQ_bca1f65fe9a33663740b8965212" UNIQUE ("mobile"), CONSTRAINT "REL_befefb4e7e3ac02b7e441f96b9" UNIQUE ("profilePicId"), CONSTRAINT "PK_931a23f6231a57604f5a0e32780" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_0f79ca681330149b65bf77fca3" ON "vendor" ("uuid") `);
-        await queryRunner.query(`CREATE TABLE "bannerCategory" ("id" SERIAL NOT NULL, "dsiplayText" text, "value" character varying, "createdBy" integer NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT false, "approvedBy" integer, CONSTRAINT "PK_f4b8b099ce9b09229fa98cc2c87" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "bannerCategory" ("id" SERIAL NOT NULL, "dsiplayText" text, "value" character varying, "createdBy" integer NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT false, CONSTRAINT "PK_f4b8b099ce9b09229fa98cc2c87" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "banner" ("id" SERIAL NOT NULL, "bgImageId" integer, "title" character varying NOT NULL, "categoryId" integer, "owner" character varying, "vendorId" integer, "homePageView" boolean, "displaySequence" integer, "targetValue" character varying, "startTime" TIMESTAMP, "endTime" TIMESTAMP, "createdBy" integer, "updatedBy" integer, "status" character varying, "reviewStatus" character varying, "rejectReason" character varying, "approvedBy" integer, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT false, CONSTRAINT "REL_dcf950685a5f448c25455a2a5c" UNIQUE ("bgImageId"), CONSTRAINT "PK_6d9e2570b3d85ba37b681cd4256" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_3d711b49338fb6396c34d80332" ON "banner" ("vendorId") `);
         await queryRunner.query(`CREATE TABLE "services" ("id" SERIAL NOT NULL, "name" character varying(100) NOT NULL, "displayName" character varying(100) NOT NULL, "imageId" character varying, "targetValue" character varying, "isActive" boolean NOT NULL DEFAULT true, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_019d74f7abcdcb5a0113010cb03" UNIQUE ("name"), CONSTRAINT "UQ_a9c61a8e67aeedc9de8d7f7ccf1" UNIQUE ("displayName"), CONSTRAINT "PK_ba2d347a3168a296416c6c5ccb2" PRIMARY KEY ("id"))`);
@@ -57,7 +57,7 @@ export class NewUpdatedMigration1764663037524 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "vendorFile" ADD CONSTRAINT "FK_7e747428f6ca1c64157a01765a5" FOREIGN KEY ("vendorId") REFERENCES "vendor"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "vendorFile" ADD CONSTRAINT "FK_673d3529cb9c30b92d01f1be03a" FOREIGN KEY ("fileId") REFERENCES "file"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "vendor" ADD CONSTRAINT "FK_befefb4e7e3ac02b7e441f96b93" FOREIGN KEY ("profilePicId") REFERENCES "vendorFile"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
-        await queryRunner.query(`ALTER TABLE "bannerCategory" ADD CONSTRAINT "FK_b9d3a929100b91aa366833fd0bf" FOREIGN KEY ("approvedBy") REFERENCES "adminUser"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "bannerCategory" ADD CONSTRAINT "FK_4af0fffedae782bf4dfcb07c96c" FOREIGN KEY ("createdBy") REFERENCES "adminUser"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "banner" ADD CONSTRAINT "FK_dcf950685a5f448c25455a2a5c3" FOREIGN KEY ("bgImageId") REFERENCES "adminfile"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "banner" ADD CONSTRAINT "FK_e1f603ae034d531c266b8a57413" FOREIGN KEY ("categoryId") REFERENCES "bannerCategory"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "banner" ADD CONSTRAINT "FK_3d711b49338fb6396c34d80332f" FOREIGN KEY ("vendorId") REFERENCES "vendor"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
@@ -101,7 +101,7 @@ export class NewUpdatedMigration1764663037524 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "banner" DROP CONSTRAINT "FK_3d711b49338fb6396c34d80332f"`);
         await queryRunner.query(`ALTER TABLE "banner" DROP CONSTRAINT "FK_e1f603ae034d531c266b8a57413"`);
         await queryRunner.query(`ALTER TABLE "banner" DROP CONSTRAINT "FK_dcf950685a5f448c25455a2a5c3"`);
-        await queryRunner.query(`ALTER TABLE "bannerCategory" DROP CONSTRAINT "FK_b9d3a929100b91aa366833fd0bf"`);
+        await queryRunner.query(`ALTER TABLE "bannerCategory" DROP CONSTRAINT "FK_4af0fffedae782bf4dfcb07c96c"`);
         await queryRunner.query(`ALTER TABLE "vendor" DROP CONSTRAINT "FK_befefb4e7e3ac02b7e441f96b93"`);
         await queryRunner.query(`ALTER TABLE "vendorFile" DROP CONSTRAINT "FK_673d3529cb9c30b92d01f1be03a"`);
         await queryRunner.query(`ALTER TABLE "vendorFile" DROP CONSTRAINT "FK_7e747428f6ca1c64157a01765a5"`);

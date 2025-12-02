@@ -26,7 +26,7 @@ export class BannerCategory {
   createdBy: number;
 
   @ManyToOne(() => AdminUser, { onDelete: "CASCADE" })
-  @JoinColumn({ name: "approvedBy" })
+  @JoinColumn({ name: "createdBy" })
   adminUser: AdminUser;
 
   @CreateDateColumn()
