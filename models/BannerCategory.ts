@@ -17,7 +17,7 @@ export class BannerCategory {
   id: number;
 
   @Column({ type: "text", nullable: true })
-  dsiplayText: string;
+  displayText: string;
 
   @Column({ nullable: true })
   value: string;
