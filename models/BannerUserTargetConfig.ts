@@ -1,5 +1,15 @@
-import { Entity, PrimaryGeneratedColumn,Column,CreateDateColumn,UpdateDateColumn,JoinColumn,OneToOne,ManyToOne, Index } from "typeorm";
-import { AdminUser } from '../models';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  JoinColumn,
+  OneToOne,
+  ManyToOne,
+  Index,
+} from "typeorm";
+import { AdminUser } from "../models";
 
 @Entity("bannerUserTargetConfig")
 export class BannerUserTargetConfig {
@@ -9,11 +19,14 @@ export class BannerUserTargetConfig {
   @Column({ nullable: true })
   displayText: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: false })
   value: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: false })
   category: string;
+
+  @Column({ default: false })
+  isFile: boolean;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -24,7 +37,7 @@ export class BannerUserTargetConfig {
   @Column({ default: false })
   isActive: boolean;
 
-  @Column({ nullable: true })
+  @Column({ nullable: false })
   createdBy: string;
 
   @ManyToOne(() => AdminUser, { onDelete: "CASCADE" })
