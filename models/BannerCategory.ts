@@ -22,7 +22,7 @@ export class BannerCategory {
   @Column({ nullable: true })
   value: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: false })
   createdBy: number;
 
   @ManyToOne(() => AdminUser, { onDelete: "CASCADE" })
