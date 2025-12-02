@@ -19,6 +19,7 @@ import { BannerAudienceType } from "./BannerAudienceType";
 import { BannerUserTarget } from "./BannerUserTarget";
 import { BannerUserTargetConfig } from "./BannerUserTargetConfig";
 import { ServiceList } from "./ServiceList";
+import { BannerCategory } from "./BannerCategory";
 // import { Product } from './Product';
 
 // Entities owned by this microservice (managed by migrations here)
@@ -43,7 +44,8 @@ export const entities = [
   BannerAudienceType,
   BannerUserTarget,
   BannerUserTargetConfig,
-  ServiceList
+  ServiceList,
+  BannerCategory,
 ];
 
 // Export individual entities and types
