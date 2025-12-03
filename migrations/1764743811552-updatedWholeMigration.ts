@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class UpdatedTotalMigration1764668210050 implements MigrationInterface {
-    name = 'UpdatedTotalMigration1764668210050'
+export class UpdatedWholeMigration1764743811552 implements MigrationInterface {
+    name = 'UpdatedWholeMigration1764743811552'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TABLE "users" ("id" SERIAL NOT NULL, "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying, "email" character varying, "mobile" character varying NOT NULL, "isActive" boolean NOT NULL DEFAULT false, "lastActive" TIMESTAMP, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "profilePicId" integer, CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "UQ_d376a9f93bba651f32a2c03a7d3" UNIQUE ("mobile"), CONSTRAINT "REL_92dd04533a2383d8cd834233fd" UNIQUE ("profilePicId"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`);
@@ -43,7 +43,7 @@ export class UpdatedTotalMigration1764668210050 implements MigrationInterface {
         await queryRunner.query(`CREATE TABLE "userFile" ("id" SERIAL NOT NULL, "userId" integer NOT NULL, "fileId" integer NOT NULL, "category" character varying, "isActive" boolean NOT NULL DEFAULT false, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_2e6d5d1e581530e42ccfab60cf7" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_7edafc32814a96594bb4f0b784" ON "userFile" ("userId") `);
         await queryRunner.query(`CREATE INDEX "IDX_5e94d897ab3b5ce964b9a2c683" ON "userFile" ("fileId") `);
-        await queryRunner.query(`CREATE TABLE "bannerUserTargetConfig" ("id" SERIAL NOT NULL, "displayText" character varying, "value" character varying NOT NULL, "category" character varying NOT NULL, "isFile" boolean NOT NULL DEFAULT false, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT false, "createdBy" integer NOT NULL, CONSTRAINT "PK_7ce0044b45fd5b25c0fe16b9496" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "bannerUserTargetConfig" ("id" SERIAL NOT NULL, "displayText" character varying, "value" character varying NOT NULL, "category" character varying NOT NULL, "isFile" boolean NOT NULL DEFAULT false, "fileFieldName" character varying, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT false, "createdBy" integer NOT NULL, CONSTRAINT "PK_7ce0044b45fd5b25c0fe16b9496" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "bannerAudienceType" ("id" SERIAL NOT NULL, "bannerId" integer, "bannerConfigId" integer, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT false, CONSTRAINT "PK_28c34c1d86f8fef142d1d7ba58b" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "bannerUserTarget" ("id" SERIAL NOT NULL, "bannerId" integer, "userId" integer, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT false, CONSTRAINT "PK_fb0090cb23dbbcf7f1cca5ecb73" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_37a8903c29e0e8e9fc8c05dd05" ON "bannerUserTarget" ("bannerId") `);
