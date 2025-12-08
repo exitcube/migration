@@ -11,7 +11,7 @@ import {
   import { User } from "./User";
   import { File } from "./File";
   
-  @Entity({ name: "userFile" }) 
+  @Entity("userFile") 
   export class UserFile {
     @PrimaryGeneratedColumn()
     id: number;
