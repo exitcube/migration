@@ -20,6 +20,16 @@ import { BannerUserTarget } from "./BannerUserTarget";
 import { BannerUserTargetConfig } from "./BannerUserTargetConfig";
 import { ServiceList } from "./ServiceList";
 import { BannerCategory } from "./BannerCategory";
+import { Reward } from "./Reward";
+import { RewardAudienceType } from "./RewardAudienceType";
+import { RewardCategory } from "./RewardCategory";
+import { RewardCode } from "./RewardCode";
+import { RewardContribution } from "./RewardContribution";
+import { RewardOfferType } from "./RewardOfferType";
+import { RewardServiceType } from "./RewardServiceType";
+import { RewardUsage } from "./RewardUsage";
+import { RewardUserTarget } from "./RewardUserTarget";
+import { RewardUserTargetConfig } from "./RewardUserTargetConfig";
 // import { Product } from './Product';
 
 // Entities owned by this microservice (managed by migrations here)
@@ -46,6 +56,17 @@ export const entities = [
   BannerUserTargetConfig,
   ServiceList,
   BannerCategory,
+  Reward,
+  RewardAudienceType,
+  RewardCategory,
+  RewardCode,
+  RewardContribution,
+  RewardOfferType,
+  RewardServiceType,
+  RewardUsage,
+  RewardUserTarget,
+  RewardUserTargetConfig,
+  // Product,
 ];
 
 // Export individual entities and types
@@ -65,4 +86,20 @@ export { UserToken, type UserToken as UserTokenType } from "./UserToken";
 export { UserOtp, type UserOtp as UserOtpType } from "./UserOtp";
 export { UserFile, type UserFile as UserFileType } from "./UserFile";
 export { ServiceList, type ServiceList as ServiceListType } from "./ServiceList";
+export  { Vendor, type Vendor as VendorType } from "./Vendor";
+export { VendorFile, type VendorFile as VendorFileType } from "./VendorFile";
+export { BannerAudienceType, type BannerAudienceType as BannerAudienceTypeType,} from "./BannerAudienceType";
+export { BannerUserTarget, type BannerUserTarget as BannerUserTargetType,} from "./BannerUserTarget";
+export { BannerUserTargetConfig, type BannerUserTargetConfig as BannerUserTargetConfigType,} from "./BannerUserTargetConfig";
+export { BannerCategory, type BannerCategory as BannerCategoryType,} from "./BannerCategory";
+export { Reward, type Reward as RewardType } from "./Reward";
+export { RewardAudienceType, type RewardAudienceType as RewardAudienceTypeType,} from "./RewardAudienceType";
+export { RewardCategory, type RewardCategory as RewardCategoryType,} from "./RewardCategory";
+export { RewardCode, type RewardCode as RewardCodeType } from "./RewardCode";
+export { RewardContribution, type RewardContribution as RewardContributionType,} from "./RewardContribution";
+export { RewardOfferType, type RewardOfferType as RewardOfferTypeType,} from "./RewardOfferType";
+export { RewardServiceType, type RewardServiceType as RewardServiceTypeType,} from "./RewardServiceType";
+export { RewardUsage, type RewardUsage as RewardUsageType } from "./RewardUsage";
+export { RewardUserTarget, type RewardUserTarget as RewardUserTargetType,} from "./RewardUserTarget";
+export { RewardUserTargetConfig, type RewardUserTargetConfig as RewardUserTargetConfigType,} from "./RewardUserTargetConfig";
 // export { Product, type Product as ProductType } from './Product';

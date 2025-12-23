@@ -81,6 +81,13 @@ export class Banner {
   @JoinColumn({ name: "approvedBy" })
   approvedByAdminUser: AdminUser;
 
+  @Column({ nullable: true })
+  removedBy: number;
+
+  @ManyToOne(() => AdminUser, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "removedBy" })
+  removedByAdminUser: AdminUser;
+  
   @CreateDateColumn({type: 'timestamptz'})
   createdAt: Date;
 
