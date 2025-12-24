@@ -9,13 +9,15 @@ export class RewardServiceType {
   id: number;
 
   @Column({ nullable: true })
+  @Index()
   rewardId: number;
 
   @ManyToOne(() => Reward, { onDelete: "CASCADE" })
   @JoinColumn({ name: "rewardId" })
   reward: Reward;
 
-  @Column({ nullable: true })
+  @Column({ nullable: false })
+  @Index()
   serviceId: number;
 
   @ManyToOne(() => Service, { onDelete: "CASCADE" })

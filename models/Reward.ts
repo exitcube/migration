@@ -13,24 +13,21 @@ export class Reward {
   @Column({ nullable: false })
   title: string;
 
-  @Column({ nullable: false, type: 'text' })
+  @Column({ nullable: true, type: 'text' })
   description: string;
 
-  @Column({ nullable: false, type: 'text' })
+  @Column({ nullable: true, type: 'text' })
   summary: string;
 
   @Column({ nullable: false })
   sideText: string;
 
   @Column({ nullable: false })
-  categoryId: string;
+  categoryId: number;
 
   @ManyToOne(() => RewardCategory, { onDelete: "CASCADE" })
   @JoinColumn({ name: "categoryId" })
   rewardCategory: RewardCategory;
-
-  @Column({ nullable: false })
-  View: string;
 
   @Column({ nullable: true })
   displaySequence: number;
@@ -40,7 +37,7 @@ export class Reward {
 
   @Column({ nullable: true })
   @Index()
-  vendorId: string;
+  vendorId: number;
 
   @ManyToOne(() => Vendor, { onDelete: "CASCADE" })
   @JoinColumn({ name: "vendorId" })
@@ -52,11 +49,11 @@ export class Reward {
   @Column({ default: false })
   dispVendorPage: boolean;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, default: 0 })
   minOrderValue: number;
 
   @Column({ nullable: false })
-  rewardOfferTypeId: string;
+  rewardOfferTypeId: number;
 
   @ManyToOne(() => RewardOfferType, { onDelete: "CASCADE" })
   @JoinColumn({ name: "rewardOfferTypeId" })

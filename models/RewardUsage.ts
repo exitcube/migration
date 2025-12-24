@@ -5,11 +5,11 @@ import {
   ManyToOne,
   JoinColumn,
   CreateDateColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
+  Index
 } from "typeorm";
 import { Reward } from "./Reward";
 import { User } from "./User";
-import { RewardCode } from "./RewardCode";
 
 @Entity("rewardUsage")
 export class RewardUsage {
@@ -17,6 +17,7 @@ export class RewardUsage {
   id: number;
 
   @Column()
+  @Index()
   rewardId: number;
 
   @ManyToOne(() => Reward, { onDelete: "CASCADE" })
@@ -24,6 +25,7 @@ export class RewardUsage {
   reward: Reward;
 
   @Column()
+  @Index()
   userId: number;
 
   @ManyToOne(() => User, { onDelete: "CASCADE" })
@@ -31,14 +33,19 @@ export class RewardUsage {
   user: User;
 
   @Column({ nullable: true })
-  rewardCodeId: number;
-
-  @ManyToOne(() => RewardCode, { onDelete: "SET NULL" })
-  @JoinColumn({ name: "rewardCodeId" })
-  rewardCode: RewardCode;
+  usedCode: string;
 
   @Column({ nullable: true })
-  usedCode: string;
+  status: string;
+
+  @Column({ nullable: true })
+  appliedAt: Date;
+
+  @Column({ nullable: true })
+  confirmedAt: Date;
+
+  @Column({ nullable: true })
+  usedAt: Date;
 
   @Column({ default: true })
   isActive: boolean;

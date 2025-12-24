@@ -39,7 +39,7 @@ export class RewardUserTargetConfig {
   isActive: boolean;
 
   @Column({ nullable: false })
-  createdBy: string;
+  createdBy: number;
 
   @ManyToOne(() => AdminUser, { onDelete: "CASCADE" })
   @JoinColumn({ name: "createdBy" })

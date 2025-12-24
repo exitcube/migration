@@ -8,6 +8,7 @@ import {
   OneToOne,
   ManyToOne,
   Index,
+  In,
 } from "typeorm";
 import { Reward } from "./Reward";
 import { RewardUserTargetConfig } from "./RewardUserTargetConfig";
@@ -18,6 +19,7 @@ export class RewardAudienceType {
   id: number;
 
   @Column({ nullable: true })
+  @Index()
   rewardId: number;
 
   @ManyToOne(() => Reward, { onDelete: "CASCADE" })
@@ -25,6 +27,7 @@ export class RewardAudienceType {
   reward: Reward;
 
   @Column({ nullable: true })
+  @Index()
   rewardConfigId: number;
 
   @ManyToOne(() => RewardUserTargetConfig, { onDelete: "CASCADE" })

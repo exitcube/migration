@@ -23,7 +23,6 @@ import { BannerCategory } from "./BannerCategory";
 import { Reward } from "./Reward";
 import { RewardAudienceType } from "./RewardAudienceType";
 import { RewardCategory } from "./RewardCategory";
-import { RewardCode } from "./RewardCode";
 import { RewardContribution } from "./RewardContribution";
 import { RewardOfferType } from "./RewardOfferType";
 import { RewardServiceType } from "./RewardServiceType";
@@ -59,7 +58,6 @@ export const entities = [
   Reward,
   RewardAudienceType,
   RewardCategory,
-  RewardCode,
   RewardContribution,
   RewardOfferType,
   RewardServiceType,
@@ -95,7 +93,6 @@ export { BannerCategory, type BannerCategory as BannerCategoryType,} from "./Ban
 export { Reward, type Reward as RewardType } from "./Reward";
 export { RewardAudienceType, type RewardAudienceType as RewardAudienceTypeType,} from "./RewardAudienceType";
 export { RewardCategory, type RewardCategory as RewardCategoryType,} from "./RewardCategory";
-export { RewardCode, type RewardCode as RewardCodeType } from "./RewardCode";
 export { RewardContribution, type RewardContribution as RewardContributionType,} from "./RewardContribution";
 export { RewardOfferType, type RewardOfferType as RewardOfferTypeType,} from "./RewardOfferType";
 export { RewardServiceType, type RewardServiceType as RewardServiceTypeType,} from "./RewardServiceType";

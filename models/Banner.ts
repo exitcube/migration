@@ -19,7 +19,7 @@ export class Banner {
   title: string;
 
   @Column({ nullable: true })
-  categoryId: string;
+  categoryId: number;
 
   @ManyToOne(() => BannerCategory, { onDelete: "CASCADE" })
   @JoinColumn({ name: "categoryId" })
@@ -30,7 +30,7 @@ export class Banner {
 
   @Column({ nullable: true })
   @Index()
-  vendorId: string;
+  vendorId: number;
 
   @ManyToOne(() => Vendor, { onDelete: "CASCADE" })
   @JoinColumn({ name: "vendorId" })
