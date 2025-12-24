@@ -5,14 +5,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   JoinColumn,
-  OneToOne,
   ManyToOne,
-  Index,
 } from "typeorm";
 import { AdminUser } from "../models";
 
-@Entity("bannerUserTargetConfig")
-export class BannerUserTargetConfig {
+@Entity("rewardUserTargetConfig")
+export class RewardUserTargetConfig {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -31,10 +29,10 @@ export class BannerUserTargetConfig {
   @Column({ nullable: true })
   fileFieldName: string
 
-  @CreateDateColumn({type: 'timestamptz'})
+  @CreateDateColumn()
   createdAt: Date;
 
-  @UpdateDateColumn({type: 'timestamptz'})
+  @UpdateDateColumn()
   updatedAt: Date;
 
   @Column({ default: false })
