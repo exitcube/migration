@@ -29,6 +29,7 @@ import { RewardServiceType } from "./RewardServiceType";
 import { RewardUsage } from "./RewardUsage";
 import { RewardUserTarget } from "./RewardUserTarget";
 import { RewardUserTargetConfig } from "./RewardUserTargetConfig";
+import { BannersByLocation } from "./BannersByLocation";
 // import { Product } from './Product';
 
 // Entities owned by this microservice (managed by migrations here)
@@ -64,6 +65,7 @@ export const entities = [
   RewardUsage,
   RewardUserTarget,
   RewardUserTargetConfig,
+  BannersByLocation,
   // Product,
 ];
 
@@ -99,4 +101,5 @@ export { RewardServiceType, type RewardServiceType as RewardServiceTypeType,} fr
 export { RewardUsage, type RewardUsage as RewardUsageType } from "./RewardUsage";
 export { RewardUserTarget, type RewardUserTarget as RewardUserTargetType,} from "./RewardUserTarget";
 export { RewardUserTargetConfig, type RewardUserTargetConfig as RewardUserTargetConfigType,} from "./RewardUserTargetConfig";
+export { BannersByLocation, type BannersByLocation as BannersByLocationType,} from "./BannersByLocation";
 // export { Product, type Product as ProductType } from './Product';
