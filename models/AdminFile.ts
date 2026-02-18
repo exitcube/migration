@@ -16,9 +16,9 @@ import {
     @PrimaryGeneratedColumn()
     id: number;
   
-    @Column({ name: "adminId" })
+    @Column({ name: "adminId", type: "int" })
     @Index()
-    adminId: string;
+    adminId: number;
   
     @ManyToOne(() => AdminUser, { onDelete: "CASCADE" })
     @JoinColumn({ name: "adminId" })
