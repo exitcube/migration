@@ -51,6 +51,8 @@ export class User {
     @Column({ nullable: true })
     profilePicId: number;
 
+    @Column({ default: false })
+    isBlocked: boolean;
 
     @OneToOne(() => UserFile, { onDelete: 'CASCADE' })
     @JoinColumn({ name: "profilePicId" })
