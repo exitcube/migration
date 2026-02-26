@@ -7,7 +7,7 @@ export class VendorOrganization {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ name: "userId" })
+    @Column({ name: "vendorId" })
     @Index()
     vendorId: number;
   
