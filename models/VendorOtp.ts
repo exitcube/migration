@@ -27,7 +27,7 @@ export class VendorOtp {
     vendorId: number;
 
     @ManyToOne(() => Vendor,{ onDelete: 'CASCADE' })
-    @JoinColumn({ name: 'vendor' })
+    @JoinColumn({ name: 'vendorId' })
     user: Vendor;
 
     @Column()
