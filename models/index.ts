@@ -34,6 +34,7 @@ import { RewardsByLocation } from "./RewardsByLocation";
 import { VendorOrganization } from "./VendorOrganization";
 import { VendorOrganizationToken } from "./VendorOrganizationToken";
 import { VendorToken } from "./VendorToken";
+import { VendorOtp } from "./VendorOtp";
 // import { Product } from './Product';
 
 // Entities owned by this microservice (managed by migrations here)
@@ -74,6 +75,7 @@ export const entities = [
   VendorOrganization,
   VendorOrganizationToken,
   VendorToken,
+  VendorOtp
   // Product,
 ];
 
@@ -114,4 +116,6 @@ export { RewardsByLocation, type RewardsByLocation as RewardsByLocationType,} fr
 export { VendorOrganization, type VendorOrganization as VendorOrganizationType,} from "./VendorOrganization";
 export { VendorOrganizationToken, type VendorOrganizationToken as VendorOrganizationTokenType,} from "./VendorOrganizationToken";
 export { VendorToken, type VendorToken as VendorTokenType } from "./VendorToken";
+export { VendorOtp, type VendorOtp as VendorOtpType } from "./VendorOtp";
+
 // export { Product, type Product as ProductType } from './Product';
