@@ -31,6 +31,9 @@ import { RewardUserTarget } from "./RewardUserTarget";
 import { RewardUserTargetConfig } from "./RewardUserTargetConfig";
 import { BannersByLocation } from "./BannersByLocation";
 import { RewardsByLocation } from "./RewardsByLocation";
+import { VendorOrganization } from "./VendorOrganization";
+import { VendorOrganizationToken } from "./VendorOrganizationToken";
+import { VendorToken } from "./VendorToken";
 // import { Product } from './Product';
 
 // Entities owned by this microservice (managed by migrations here)
@@ -67,7 +70,10 @@ export const entities = [
   RewardUserTarget,
   RewardUserTargetConfig,
   BannersByLocation,
-  RewardsByLocation
+  RewardsByLocation,
+  VendorOrganization,
+  VendorOrganizationToken,
+  VendorToken,
   // Product,
 ];
 
@@ -105,4 +111,7 @@ export { RewardUserTarget, type RewardUserTarget as RewardUserTargetType,} from 
 export { RewardUserTargetConfig, type RewardUserTargetConfig as RewardUserTargetConfigType,} from "./RewardUserTargetConfig";
 export { BannersByLocation, type BannersByLocation as BannersByLocationType,} from "./BannersByLocation";
 export { RewardsByLocation, type RewardsByLocation as RewardsByLocationType,} from "./RewardsByLocation";
+export { VendorOrganization, type VendorOrganization as VendorOrganizationType,} from "./VendorOrganization";
+export { VendorOrganizationToken, type VendorOrganizationToken as VendorOrganizationTokenType,} from "./VendorOrganizationToken";
+export { VendorToken, type VendorToken as VendorTokenType } from "./VendorToken";
 // export { Product, type Product as ProductType } from './Product';
