@@ -25,7 +25,7 @@ export class VendorOrganization {
     password: string;
 
     @Column({ nullable: false })
-    contactMobile: number;
+    mobile: string;
 
     @Column({ nullable: true })
     contactEmail: string;
