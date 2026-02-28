@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class TotalMigration1766572149658 implements MigrationInterface {
-    name = 'TotalMigration1766572149658'
+export class WholeMigration1772273496317 implements MigrationInterface {
+    name = 'WholeMigration1772273496317'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`CREATE TABLE "users" ("id" SERIAL NOT NULL, "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying, "email" character varying, "mobile" character varying NOT NULL, "isActive" boolean NOT NULL DEFAULT false, "lastActive" TIMESTAMP, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "profilePicId" integer, CONSTRAINT "UQ_d376a9f93bba651f32a2c03a7d3" UNIQUE ("mobile"), CONSTRAINT "REL_92dd04533a2383d8cd834233fd" UNIQUE ("profilePicId"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "users" ("id" SERIAL NOT NULL, "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying, "email" character varying, "mobile" character varying NOT NULL, "isActive" boolean NOT NULL DEFAULT false, "lastActive" TIMESTAMP, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "profilePicId" integer, "isBlocked" boolean NOT NULL DEFAULT false, CONSTRAINT "UQ_d376a9f93bba651f32a2c03a7d3" UNIQUE ("mobile"), CONSTRAINT "REL_92dd04533a2383d8cd834233fd" UNIQUE ("profilePicId"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_951b8f1dfc94ac1d0301a14b7e" ON "users" ("uuid") `);
         await queryRunner.query(`CREATE INDEX "IDX_d376a9f93bba651f32a2c03a7d" ON "users" ("mobile") `);
         await queryRunner.query(`CREATE TABLE "userDevice" ("id" SERIAL NOT NULL, "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(), "userId" integer NOT NULL, "lastLogin" TIMESTAMP, "lastActive" TIMESTAMP, "userAgent" character varying, "lastLogoutTime" TIMESTAMP, "ipAddress" character varying, "isActive" boolean NOT NULL DEFAULT true, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_7d9d56d85466ed4356ea156d5cb" PRIMARY KEY ("id"))`);
@@ -20,20 +20,23 @@ export class TotalMigration1766572149658 implements MigrationInterface {
         await queryRunner.query(`CREATE TABLE "adminUser" ("id" SERIAL NOT NULL, "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(), "userName" character varying NOT NULL, "password" character varying NOT NULL, "role" character varying NOT NULL, "email" character varying, "empCode" character varying NOT NULL, "isActive" boolean NOT NULL DEFAULT false, "joiningDate" date NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_f155e50a944f2658dc1ccb477a2" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_9395dcb94215bc65fe851f46f1" ON "adminUser" ("uuid") `);
         await queryRunner.query(`CREATE TABLE "file" ("id" SERIAL NOT NULL, "fileName" character varying NOT NULL, "storageLocation" character varying NOT NULL, "mimeType" character varying NOT NULL, "sizeBytes" bigint NOT NULL, "provider" character varying, "url" text NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT false, CONSTRAINT "PK_36b46d232307066b3a2c9ea3a1d" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE TABLE "vendorFile" ("id" SERIAL NOT NULL, "userId" integer NOT NULL, "fileId" integer NOT NULL, "category" character varying, "isActive" boolean NOT NULL DEFAULT false, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "vendorId" integer, CONSTRAINT "PK_e582dd70084c7c25fd814cc9bf3" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE INDEX "IDX_557d8f7f3caa323ab1b351b34f" ON "vendorFile" ("userId") `);
+        await queryRunner.query(`CREATE TABLE "vendorFile" ("id" SERIAL NOT NULL, "vendorId" integer NOT NULL, "fileId" integer NOT NULL, "category" character varying, "isActive" boolean NOT NULL DEFAULT false, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_e582dd70084c7c25fd814cc9bf3" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE INDEX "IDX_7e747428f6ca1c64157a01765a" ON "vendorFile" ("vendorId") `);
         await queryRunner.query(`CREATE INDEX "IDX_673d3529cb9c30b92d01f1be03" ON "vendorFile" ("fileId") `);
-        await queryRunner.query(`CREATE TABLE "vendor" ("id" SERIAL NOT NULL, "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying, "email" character varying, "mobile" character varying, "isActive" boolean NOT NULL DEFAULT false, "lastActive" TIMESTAMP, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "profilePicId" integer, "vendorCode" character varying, CONSTRAINT "UQ_bca1f65fe9a33663740b8965212" UNIQUE ("mobile"), CONSTRAINT "REL_befefb4e7e3ac02b7e441f96b9" UNIQUE ("profilePicId"), CONSTRAINT "PK_931a23f6231a57604f5a0e32780" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "vendorOrganization" ("id" SERIAL NOT NULL, "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(), "vendorOrgCode" character varying NOT NULL, "name" character varying, "email" character varying, "mobile" character varying NOT NULL, "status" character varying, "accountStatus" character varying, "lastActive" TIMESTAMP, "isActive" boolean NOT NULL DEFAULT false, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_7527b60a5f518df280f9403c326" UNIQUE ("mobile"), CONSTRAINT "PK_b614153da3ea191afb29f7efa37" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE INDEX "IDX_ae8f81704c6bf48e5628919f7e" ON "vendorOrganization" ("uuid") `);
+        await queryRunner.query(`CREATE TABLE "vendor" ("id" SERIAL NOT NULL, "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(), "vendorOrgId" integer NOT NULL, "name" character varying, "email" character varying, "mobile" character varying NOT NULL, "password" character varying NOT NULL, "lastActive" TIMESTAMP, "profilePicId" integer, "vendorCode" character varying NOT NULL, "address" character varying, "country" character varying(100), "city" character varying(100), "state" character varying(100), "pinCode" character varying(20), "latitude" numeric(10,5) NOT NULL, "longitude" numeric(10,5) NOT NULL, "openingTime" character varying, "closingTime" character varying, "status" character varying, "accountStatus" character varying, "isActive" boolean NOT NULL DEFAULT false, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_bca1f65fe9a33663740b8965212" UNIQUE ("mobile"), CONSTRAINT "REL_befefb4e7e3ac02b7e441f96b9" UNIQUE ("profilePicId"), CONSTRAINT "PK_931a23f6231a57604f5a0e32780" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_0f79ca681330149b65bf77fca3" ON "vendor" ("uuid") `);
+        await queryRunner.query(`CREATE INDEX "IDX_c853a3b3a9e174740900a8879e" ON "vendor" ("vendorOrgId") `);
         await queryRunner.query(`CREATE TABLE "bannerCategory" ("id" SERIAL NOT NULL, "displayText" text, "value" character varying, "createdBy" integer NOT NULL, "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT false, CONSTRAINT "PK_f4b8b099ce9b09229fa98cc2c87" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "banner" ("id" SERIAL NOT NULL, "bgImageId" integer, "title" character varying NOT NULL, "categoryId" integer, "owner" character varying, "vendorId" integer, "homePageView" boolean, "displaySequence" integer, "targetValue" character varying, "startTime" TIMESTAMP WITH TIME ZONE, "endTime" TIMESTAMP WITH TIME ZONE, "createdBy" integer, "updatedBy" integer, "status" character varying, "reviewStatus" character varying, "rejectReason" character varying, "approvedBy" integer, "removedBy" integer, "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT false, CONSTRAINT "REL_dcf950685a5f448c25455a2a5c" UNIQUE ("bgImageId"), CONSTRAINT "PK_6d9e2570b3d85ba37b681cd4256" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_3d711b49338fb6396c34d80332" ON "banner" ("vendorId") `);
-        await queryRunner.query(`CREATE TABLE "services" ("id" SERIAL NOT NULL, "name" character varying(100) NOT NULL, "displayName" character varying(100) NOT NULL, "imageId" character varying, "targetValue" character varying, "isActive" boolean NOT NULL DEFAULT true, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_019d74f7abcdcb5a0113010cb03" UNIQUE ("name"), CONSTRAINT "UQ_a9c61a8e67aeedc9de8d7f7ccf1" UNIQUE ("displayName"), CONSTRAINT "PK_ba2d347a3168a296416c6c5ccb2" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE TABLE "adminToken" ("id" SERIAL NOT NULL, "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(), "userId" integer NOT NULL, "refreshToken" text NOT NULL, "accessToken" character varying NOT NULL, "refreshTokenExpiry" TIMESTAMP, "refreshTokenStatus" character varying NOT NULL, "isActive" boolean NOT NULL DEFAULT false, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_18485fa0b06d6486aac1472bbe4" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE INDEX "IDX_83cbb625983fe26892df4dbec6" ON "adminToken" ("userId") `);
         await queryRunner.query(`CREATE TABLE "adminFile" ("id" SERIAL NOT NULL, "adminId" integer NOT NULL, "fileId" integer NOT NULL, "category" character varying, "isActive" boolean NOT NULL DEFAULT false, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_f82888f8385a576cce3864357d5" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_ba7d54b06c3b505d1f7fa3c82b" ON "adminFile" ("adminId") `);
         await queryRunner.query(`CREATE INDEX "IDX_562d5397c73e90987a22eaa552" ON "adminFile" ("fileId") `);
+        await queryRunner.query(`CREATE TABLE "services" ("id" SERIAL NOT NULL, "name" character varying(100) NOT NULL, "displayName" character varying(100) NOT NULL, "imageId" integer, "value" character varying, "description" character varying, "displaySequence" integer, "status" character varying, "isActive" boolean NOT NULL DEFAULT true, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "createdBy" integer NOT NULL, "removedBy" integer, CONSTRAINT "UQ_019d74f7abcdcb5a0113010cb03" UNIQUE ("name"), CONSTRAINT "UQ_a9c61a8e67aeedc9de8d7f7ccf1" UNIQUE ("displayName"), CONSTRAINT "REL_3f67c9d81453c5582cf4341caf" UNIQUE ("imageId"), CONSTRAINT "PK_ba2d347a3168a296416c6c5ccb2" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "adminToken" ("id" SERIAL NOT NULL, "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(), "userId" integer NOT NULL, "refreshToken" text NOT NULL, "accessToken" character varying NOT NULL, "refreshTokenExpiry" TIMESTAMP, "refreshTokenStatus" character varying NOT NULL, "isActive" boolean NOT NULL DEFAULT false, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_18485fa0b06d6486aac1472bbe4" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE INDEX "IDX_83cbb625983fe26892df4dbec6" ON "adminToken" ("userId") `);
         await queryRunner.query(`CREATE TABLE "userToken" ("id" SERIAL NOT NULL, "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(), "userId" integer NOT NULL, "deviceId" integer NOT NULL, "refreshToken" text NOT NULL, "accessToken" character varying NOT NULL, "refreshTokenExpiry" TIMESTAMP, "refreshTokenStatus" character varying NOT NULL, "isActive" boolean NOT NULL DEFAULT false, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_57e9636d5325549fd42e0d7a440" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_002c4d6b032daf6b513e1a4cd8" ON "userToken" ("userId") `);
         await queryRunner.query(`CREATE INDEX "IDX_ed220e4533fb012a59ce1bd7f5" ON "userToken" ("deviceId") `);
@@ -52,7 +55,7 @@ export class TotalMigration1766572149658 implements MigrationInterface {
         await queryRunner.query(`CREATE TABLE "rewardCategory" ("id" SERIAL NOT NULL, "displayText" text, "value" character varying, "createdBy" integer NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT false, CONSTRAINT "PK_fd9ad6d336a5391a750b8a4ceda" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "rewardOfferType" ("id" SERIAL NOT NULL, "offerType" character varying NOT NULL, "percentage" integer, "maxAmount" integer NOT NULL, "isActive" boolean NOT NULL DEFAULT true, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_e77798aa037ab15e4345c6c58b3" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "rewardContribution" ("id" SERIAL NOT NULL, "contributor" character varying NOT NULL, "shinrPercentage" integer, "vendorPercentage" integer, "isActive" boolean NOT NULL DEFAULT true, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_eb8660cb423e20fd6160fc803cb" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE TABLE "reward" ("id" SERIAL NOT NULL, "title" character varying NOT NULL, "description" text, "summary" text, "sideText" character varying NOT NULL, "categoryId" integer NOT NULL, "displaySequence" integer, "owner" character varying, "vendorId" integer, "dispCouponPage" boolean NOT NULL DEFAULT false, "dispVendorPage" boolean NOT NULL DEFAULT false, "minOrderValue" integer NOT NULL DEFAULT '0', "rewardOfferTypeId" integer NOT NULL, "startDate" TIMESTAMP WITH TIME ZONE, "endDate" TIMESTAMP WITH TIME ZONE, "grabLimit" integer NOT NULL, "maxUsage" integer NOT NULL, "maxUsagePeriod" character varying, "maxUsagePeriodValue" integer, "rewardContributorId" integer NOT NULL, "codeType" character varying, "singleCode" character varying, "status" character varying, "createdBy" integer, "updatedBy" integer, "removedBy" integer, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT false, CONSTRAINT "PK_a90ea606c229e380fb341838036" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "reward" ("id" SERIAL NOT NULL, "title" character varying NOT NULL, "description" text, "summary" text, "sideText" character varying NOT NULL, "categoryId" integer NOT NULL, "displaySequence" integer, "owner" character varying, "vendorId" integer, "dispCouponPage" boolean NOT NULL DEFAULT false, "dispVendorPage" boolean NOT NULL DEFAULT false, "minOrderValue" integer NOT NULL DEFAULT '0', "rewardOfferTypeId" integer NOT NULL, "startDate" TIMESTAMP WITH TIME ZONE, "endDate" TIMESTAMP WITH TIME ZONE, "grabLimit" integer, "maxUsage" integer NOT NULL, "maxUsagePeriod" character varying, "maxUsagePeriodValue" integer, "rewardContributorId" integer NOT NULL, "codeType" character varying, "singleCode" character varying, "status" character varying, "createdBy" integer, "updatedBy" integer, "removedBy" integer, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT false, CONSTRAINT "PK_a90ea606c229e380fb341838036" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_803149782d76e949e7862c2c02" ON "reward" ("vendorId") `);
         await queryRunner.query(`CREATE TABLE "rewardUserTargetConfig" ("id" SERIAL NOT NULL, "displayText" character varying, "value" character varying NOT NULL, "category" character varying NOT NULL, "isFile" boolean NOT NULL DEFAULT false, "fileFieldName" character varying, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT false, "createdBy" integer NOT NULL, CONSTRAINT "PK_c1dab430b6302b0c35e58ab052e" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "rewardAudienceType" ("id" SERIAL NOT NULL, "rewardId" integer, "rewardConfigId" integer, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT false, CONSTRAINT "PK_20859190c256ff61d26360ecac7" PRIMARY KEY ("id"))`);
@@ -67,6 +70,18 @@ export class TotalMigration1766572149658 implements MigrationInterface {
         await queryRunner.query(`CREATE TABLE "rewardUserTarget" ("id" SERIAL NOT NULL, "rewardId" integer, "userId" integer, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT false, CONSTRAINT "PK_11d4c6ada35f4a9a74b0affcea2" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_c13d2fea673b9393cb2861ac35" ON "rewardUserTarget" ("rewardId") `);
         await queryRunner.query(`CREATE INDEX "IDX_9a9af71b7596c7b3649ce986b5" ON "rewardUserTarget" ("userId") `);
+        await queryRunner.query(`CREATE TABLE "bannersByLocation" ("id" SERIAL NOT NULL, "bannerId" integer, "latitude" numeric(10,5) NOT NULL, "longitude" numeric(10,5) NOT NULL, "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT false, CONSTRAINT "PK_3b27d7cbf98415f71366a056d5f" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE INDEX "IDX_2fa626659ad822d7d1433c62ef" ON "bannersByLocation" ("bannerId") `);
+        await queryRunner.query(`CREATE TABLE "rewardssByLocation" ("id" SERIAL NOT NULL, "rewardId" integer, "latitude" numeric(10,5) NOT NULL, "longitude" numeric(10,5) NOT NULL, "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT false, CONSTRAINT "PK_e4bb89feea8d531aa4d82a213c0" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE INDEX "IDX_0be1d88658ff354ef9894af059" ON "rewardssByLocation" ("rewardId") `);
+        await queryRunner.query(`CREATE TABLE "vendorOrganizationToken" ("id" SERIAL NOT NULL, "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(), "vendorOrganizationId" integer NOT NULL, "refreshToken" text NOT NULL, "accessToken" character varying NOT NULL, "refreshTokenExpiry" TIMESTAMP, "refreshTokenStatus" character varying NOT NULL, "isActive" boolean NOT NULL DEFAULT false, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_0fae9c9d8ad684e164093724c62" UNIQUE ("accessToken"), CONSTRAINT "PK_a59e82a5c4a270d6a8d0d44ae35" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE INDEX "IDX_f789bdd3d1480768f8de124fe8" ON "vendorOrganizationToken" ("uuid") `);
+        await queryRunner.query(`CREATE INDEX "IDX_e8af3ab5fdc1390bb18e655b19" ON "vendorOrganizationToken" ("vendorOrganizationId") `);
+        await queryRunner.query(`CREATE TABLE "vendorToken" ("id" SERIAL NOT NULL, "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(), "vendorId" integer NOT NULL, "refreshToken" text NOT NULL, "accessToken" character varying NOT NULL, "refreshTokenExpiry" TIMESTAMP, "refreshTokenStatus" character varying NOT NULL, "isActive" boolean NOT NULL DEFAULT false, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_cb9bc19bf2992a4ddcaecf88436" UNIQUE ("accessToken"), CONSTRAINT "PK_19e385c6903fd5f6021473a352e" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE INDEX "IDX_07cf4395984ad2380aad7aac2f" ON "vendorToken" ("uuid") `);
+        await queryRunner.query(`CREATE INDEX "IDX_a969d834a6f95dd2e531530da9" ON "vendorToken" ("vendorId") `);
+        await queryRunner.query(`CREATE TABLE "vendorOrgOtp" ("id" SERIAL NOT NULL, "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(), "vendorId" integer NOT NULL, "otp" character varying NOT NULL, "otpToken" character varying NOT NULL, "lastRequestedTime" TIMESTAMP NOT NULL, "requestCount" smallint NOT NULL DEFAULT '0', "isActive" boolean NOT NULL DEFAULT true, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_f9f24b292dbe75b048d7872dd28" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE INDEX "IDX_ddd7f36dee891118403919ad21" ON "vendorOrgOtp" ("vendorId") `);
         await queryRunner.query(`ALTER TABLE "users" ADD CONSTRAINT "FK_92dd04533a2383d8cd834233fd1" FOREIGN KEY ("profilePicId") REFERENCES "userFile"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "userDevice" ADD CONSTRAINT "FK_9f3c9ae281195c7c59cb694980a" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "userAddress" ADD CONSTRAINT "FK_8b251cbfcbf880bcdec80cf36c5" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
@@ -74,6 +89,7 @@ export class TotalMigration1766572149658 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "cars" ADD CONSTRAINT "FK_b8f2af5403621c1527f4c76609f" FOREIGN KEY ("categoryId") REFERENCES "carCategory"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "vendorFile" ADD CONSTRAINT "FK_7e747428f6ca1c64157a01765a5" FOREIGN KEY ("vendorId") REFERENCES "vendor"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "vendorFile" ADD CONSTRAINT "FK_673d3529cb9c30b92d01f1be03a" FOREIGN KEY ("fileId") REFERENCES "file"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "vendor" ADD CONSTRAINT "FK_c853a3b3a9e174740900a8879e2" FOREIGN KEY ("vendorOrgId") REFERENCES "vendorOrganization"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "vendor" ADD CONSTRAINT "FK_befefb4e7e3ac02b7e441f96b93" FOREIGN KEY ("profilePicId") REFERENCES "vendorFile"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "bannerCategory" ADD CONSTRAINT "FK_4af0fffedae782bf4dfcb07c96c" FOREIGN KEY ("createdBy") REFERENCES "adminUser"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "banner" ADD CONSTRAINT "FK_dcf950685a5f448c25455a2a5c3" FOREIGN KEY ("bgImageId") REFERENCES "adminFile"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
@@ -83,9 +99,12 @@ export class TotalMigration1766572149658 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "banner" ADD CONSTRAINT "FK_d7dbb829c4be94d7dd752a856ff" FOREIGN KEY ("updatedBy") REFERENCES "adminUser"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "banner" ADD CONSTRAINT "FK_89808b7abcdf617ec7f7964837b" FOREIGN KEY ("approvedBy") REFERENCES "adminUser"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "banner" ADD CONSTRAINT "FK_6bc592dbf0cf4aa26cfa09e45bc" FOREIGN KEY ("removedBy") REFERENCES "adminUser"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
-        await queryRunner.query(`ALTER TABLE "adminToken" ADD CONSTRAINT "FK_83cbb625983fe26892df4dbec69" FOREIGN KEY ("userId") REFERENCES "adminUser"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "adminFile" ADD CONSTRAINT "FK_ba7d54b06c3b505d1f7fa3c82b0" FOREIGN KEY ("adminId") REFERENCES "adminUser"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "adminFile" ADD CONSTRAINT "FK_562d5397c73e90987a22eaa552a" FOREIGN KEY ("fileId") REFERENCES "file"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "services" ADD CONSTRAINT "FK_3f67c9d81453c5582cf4341cafc" FOREIGN KEY ("imageId") REFERENCES "adminFile"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "services" ADD CONSTRAINT "FK_a69bcc341080729dff43e7b1649" FOREIGN KEY ("createdBy") REFERENCES "adminUser"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "services" ADD CONSTRAINT "FK_7e118e0e00576f161050e60678d" FOREIGN KEY ("removedBy") REFERENCES "adminUser"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "adminToken" ADD CONSTRAINT "FK_83cbb625983fe26892df4dbec69" FOREIGN KEY ("userId") REFERENCES "adminUser"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "userToken" ADD CONSTRAINT "FK_002c4d6b032daf6b513e1a4cd8f" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "userOtp" ADD CONSTRAINT "FK_f9005f69a93cc20f32bd0ce1145" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "userOtp" ADD CONSTRAINT "FK_dbe33a676c9935082befb09f695" FOREIGN KEY ("deviceId") REFERENCES "userDevice"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
@@ -114,9 +133,19 @@ export class TotalMigration1766572149658 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "rewardUsage" ADD CONSTRAINT "FK_9a4b0b5b6bbba4c68cb15814e0c" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "rewardUserTarget" ADD CONSTRAINT "FK_c13d2fea673b9393cb2861ac353" FOREIGN KEY ("rewardId") REFERENCES "reward"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "rewardUserTarget" ADD CONSTRAINT "FK_9a9af71b7596c7b3649ce986b50" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "bannersByLocation" ADD CONSTRAINT "FK_2fa626659ad822d7d1433c62efb" FOREIGN KEY ("bannerId") REFERENCES "banner"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "rewardssByLocation" ADD CONSTRAINT "FK_0be1d88658ff354ef9894af0598" FOREIGN KEY ("rewardId") REFERENCES "reward"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "vendorOrganizationToken" ADD CONSTRAINT "FK_e8af3ab5fdc1390bb18e655b19c" FOREIGN KEY ("vendorOrganizationId") REFERENCES "vendorOrganization"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "vendorToken" ADD CONSTRAINT "FK_a969d834a6f95dd2e531530da94" FOREIGN KEY ("vendorId") REFERENCES "vendor"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "vendorOrgOtp" ADD CONSTRAINT "FK_ddd7f36dee891118403919ad21a" FOREIGN KEY ("vendorId") REFERENCES "vendor"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`ALTER TABLE "vendorOrgOtp" DROP CONSTRAINT "FK_ddd7f36dee891118403919ad21a"`);
+        await queryRunner.query(`ALTER TABLE "vendorToken" DROP CONSTRAINT "FK_a969d834a6f95dd2e531530da94"`);
+        await queryRunner.query(`ALTER TABLE "vendorOrganizationToken" DROP CONSTRAINT "FK_e8af3ab5fdc1390bb18e655b19c"`);
+        await queryRunner.query(`ALTER TABLE "rewardssByLocation" DROP CONSTRAINT "FK_0be1d88658ff354ef9894af0598"`);
+        await queryRunner.query(`ALTER TABLE "bannersByLocation" DROP CONSTRAINT "FK_2fa626659ad822d7d1433c62efb"`);
         await queryRunner.query(`ALTER TABLE "rewardUserTarget" DROP CONSTRAINT "FK_9a9af71b7596c7b3649ce986b50"`);
         await queryRunner.query(`ALTER TABLE "rewardUserTarget" DROP CONSTRAINT "FK_c13d2fea673b9393cb2861ac353"`);
         await queryRunner.query(`ALTER TABLE "rewardUsage" DROP CONSTRAINT "FK_9a4b0b5b6bbba4c68cb15814e0c"`);
@@ -145,9 +174,12 @@ export class TotalMigration1766572149658 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "userOtp" DROP CONSTRAINT "FK_dbe33a676c9935082befb09f695"`);
         await queryRunner.query(`ALTER TABLE "userOtp" DROP CONSTRAINT "FK_f9005f69a93cc20f32bd0ce1145"`);
         await queryRunner.query(`ALTER TABLE "userToken" DROP CONSTRAINT "FK_002c4d6b032daf6b513e1a4cd8f"`);
+        await queryRunner.query(`ALTER TABLE "adminToken" DROP CONSTRAINT "FK_83cbb625983fe26892df4dbec69"`);
+        await queryRunner.query(`ALTER TABLE "services" DROP CONSTRAINT "FK_7e118e0e00576f161050e60678d"`);
+        await queryRunner.query(`ALTER TABLE "services" DROP CONSTRAINT "FK_a69bcc341080729dff43e7b1649"`);
+        await queryRunner.query(`ALTER TABLE "services" DROP CONSTRAINT "FK_3f67c9d81453c5582cf4341cafc"`);
         await queryRunner.query(`ALTER TABLE "adminFile" DROP CONSTRAINT "FK_562d5397c73e90987a22eaa552a"`);
         await queryRunner.query(`ALTER TABLE "adminFile" DROP CONSTRAINT "FK_ba7d54b06c3b505d1f7fa3c82b0"`);
-        await queryRunner.query(`ALTER TABLE "adminToken" DROP CONSTRAINT "FK_83cbb625983fe26892df4dbec69"`);
         await queryRunner.query(`ALTER TABLE "banner" DROP CONSTRAINT "FK_6bc592dbf0cf4aa26cfa09e45bc"`);
         await queryRunner.query(`ALTER TABLE "banner" DROP CONSTRAINT "FK_89808b7abcdf617ec7f7964837b"`);
         await queryRunner.query(`ALTER TABLE "banner" DROP CONSTRAINT "FK_d7dbb829c4be94d7dd752a856ff"`);
@@ -157,6 +189,7 @@ export class TotalMigration1766572149658 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "banner" DROP CONSTRAINT "FK_dcf950685a5f448c25455a2a5c3"`);
         await queryRunner.query(`ALTER TABLE "bannerCategory" DROP CONSTRAINT "FK_4af0fffedae782bf4dfcb07c96c"`);
         await queryRunner.query(`ALTER TABLE "vendor" DROP CONSTRAINT "FK_befefb4e7e3ac02b7e441f96b93"`);
+        await queryRunner.query(`ALTER TABLE "vendor" DROP CONSTRAINT "FK_c853a3b3a9e174740900a8879e2"`);
         await queryRunner.query(`ALTER TABLE "vendorFile" DROP CONSTRAINT "FK_673d3529cb9c30b92d01f1be03a"`);
         await queryRunner.query(`ALTER TABLE "vendorFile" DROP CONSTRAINT "FK_7e747428f6ca1c64157a01765a5"`);
         await queryRunner.query(`ALTER TABLE "cars" DROP CONSTRAINT "FK_b8f2af5403621c1527f4c76609f"`);
@@ -164,6 +197,18 @@ export class TotalMigration1766572149658 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "userAddress" DROP CONSTRAINT "FK_8b251cbfcbf880bcdec80cf36c5"`);
         await queryRunner.query(`ALTER TABLE "userDevice" DROP CONSTRAINT "FK_9f3c9ae281195c7c59cb694980a"`);
         await queryRunner.query(`ALTER TABLE "users" DROP CONSTRAINT "FK_92dd04533a2383d8cd834233fd1"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_ddd7f36dee891118403919ad21"`);
+        await queryRunner.query(`DROP TABLE "vendorOrgOtp"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_a969d834a6f95dd2e531530da9"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_07cf4395984ad2380aad7aac2f"`);
+        await queryRunner.query(`DROP TABLE "vendorToken"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_e8af3ab5fdc1390bb18e655b19"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_f789bdd3d1480768f8de124fe8"`);
+        await queryRunner.query(`DROP TABLE "vendorOrganizationToken"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_0be1d88658ff354ef9894af059"`);
+        await queryRunner.query(`DROP TABLE "rewardssByLocation"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_2fa626659ad822d7d1433c62ef"`);
+        await queryRunner.query(`DROP TABLE "bannersByLocation"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_9a9af71b7596c7b3649ce986b5"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_c13d2fea673b9393cb2861ac35"`);
         await queryRunner.query(`DROP TABLE "rewardUserTarget"`);
@@ -197,19 +242,22 @@ export class TotalMigration1766572149658 implements MigrationInterface {
         await queryRunner.query(`DROP INDEX "public"."IDX_ed220e4533fb012a59ce1bd7f5"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_002c4d6b032daf6b513e1a4cd8"`);
         await queryRunner.query(`DROP TABLE "userToken"`);
-        await queryRunner.query(`DROP INDEX "public"."IDX_562d5397c73e90987a22eaa552"`);
-        await queryRunner.query(`DROP INDEX "public"."IDX_ba7d54b06c3b505d1f7fa3c82b"`);
-        await queryRunner.query(`DROP TABLE "adminFile"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_83cbb625983fe26892df4dbec6"`);
         await queryRunner.query(`DROP TABLE "adminToken"`);
         await queryRunner.query(`DROP TABLE "services"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_562d5397c73e90987a22eaa552"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_ba7d54b06c3b505d1f7fa3c82b"`);
+        await queryRunner.query(`DROP TABLE "adminFile"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_3d711b49338fb6396c34d80332"`);
         await queryRunner.query(`DROP TABLE "banner"`);
         await queryRunner.query(`DROP TABLE "bannerCategory"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_c853a3b3a9e174740900a8879e"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_0f79ca681330149b65bf77fca3"`);
         await queryRunner.query(`DROP TABLE "vendor"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_ae8f81704c6bf48e5628919f7e"`);
+        await queryRunner.query(`DROP TABLE "vendorOrganization"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_673d3529cb9c30b92d01f1be03"`);
-        await queryRunner.query(`DROP INDEX "public"."IDX_557d8f7f3caa323ab1b351b34f"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_7e747428f6ca1c64157a01765a"`);
         await queryRunner.query(`DROP TABLE "vendorFile"`);
         await queryRunner.query(`DROP TABLE "file"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_9395dcb94215bc65fe851f46f1"`);

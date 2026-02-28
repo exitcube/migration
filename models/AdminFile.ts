@@ -18,7 +18,7 @@ import {
   
     @Column({ name: "adminId" })
     @Index()
-    adminId: string;
+    adminId: number;
   
     @ManyToOne(() => AdminUser, { onDelete: "CASCADE" })
     @JoinColumn({ name: "adminId" })

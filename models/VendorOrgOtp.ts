@@ -13,8 +13,8 @@ import { Vendor } from './Vendor';
 
  
 
-@Entity('vendorOtp')
-export class VendorOtp {
+@Entity('vendorOrgOtp')
+export class VendorOrgOtp {
     @PrimaryGeneratedColumn()
     id: number; // internal auto-increment id (good for sorting)
 
