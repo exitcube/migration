@@ -9,7 +9,7 @@ import {
     JoinColumn,
     Generated
 } from 'typeorm';
-import { Vendor } from './Vendor';
+import { VendorOrganization } from './VendorOrganization';
 
  
 
@@ -24,11 +24,11 @@ export class VendorOrgOtp {
 
     @Column()
     @Index()
-    vendorId: number;
+    vendorOrgId: number;
 
-    @ManyToOne(() => Vendor,{ onDelete: 'CASCADE' })
-    @JoinColumn({ name: 'vendorId' })
-    user: Vendor;
+    @ManyToOne(() => VendorOrganization,{ onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'vendorOrgId' })
+    user: VendorOrganization;
 
     @Column()
     otp: string;
