@@ -78,6 +78,12 @@ export class Vendor {
   @Column({ nullable: true })
   accountStatus: string;
 
+  @Column({ nullable: true, type: 'text' })
+  description: string;
+
+  @Column({ nullable: true })
+  buisnessExperience: string;
+
   @Column({ default: false })
   isActive: boolean;
 
