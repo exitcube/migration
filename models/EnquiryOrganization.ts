@@ -51,8 +51,8 @@ export class EnquiryOrganization {
   @Column({ length: 20, nullable: true })
   pinCode: string;
 
-  @Column({ length: 20, nullable: true })
-  buisnessType: string;
+  @Column("simple-array", { nullable: true })
+  businessType: string[];
 
   @Column({ length: 20, nullable: true })
   buisnessExperience: string;
