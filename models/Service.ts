@@ -34,7 +34,7 @@ export class Service {
     @Column({ type: 'varchar', nullable: true })
     value: string;
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, type: 'text' })
     description: string;
 
     @Column({ nullable: true })
