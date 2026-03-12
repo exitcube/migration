@@ -49,6 +49,7 @@ export class User {
     device: UserDevice;
 
     @Column({ nullable: true })
+    @Index()
     profilePicId: number;
 
     @Column({ default: false })

@@ -23,6 +23,7 @@ export class Reward {
   sideText: string;
 
   @Column({ nullable: false })
+  @Index()
   categoryId: number;
 
   @ManyToOne(() => RewardCategory, { onDelete: "CASCADE" })
@@ -53,6 +54,7 @@ export class Reward {
   minOrderValue: number;
 
   @Column({ nullable: false })
+  @Index()
   rewardOfferTypeId: number;
 
   @ManyToOne(() => RewardOfferType, { onDelete: "CASCADE" })
@@ -78,6 +80,7 @@ export class Reward {
   maxUsagePeriodValue: number;
 
   @Column({ nullable: false })
+  @Index()
   rewardContributorId: number;
 
   @ManyToOne(() => RewardContribution, { onDelete: "CASCADE" })
@@ -94,6 +97,7 @@ export class Reward {
   status: string;
 
   @Column({ nullable: true })
+  @Index()
   createdBy: number;
 
   @ManyToOne(() => AdminUser, { onDelete: "CASCADE" })
@@ -101,6 +105,7 @@ export class Reward {
   createdByAdminUser: AdminUser;
 
   @Column({ nullable: true })
+  @Index()
   updatedBy: number;
 
   @ManyToOne(() => AdminUser, { onDelete: "CASCADE" })
@@ -108,6 +113,7 @@ export class Reward {
   updatedByAdminUser: AdminUser;
 
   @Column({ nullable: true })
+  @Index()
   removedBy: number;
 
   @ManyToOne(() => AdminUser, { onDelete: "CASCADE" })

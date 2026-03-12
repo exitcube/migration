@@ -41,6 +41,7 @@ export class BannerUserTargetConfig {
   isActive: boolean;
 
   @Column({ nullable: false })
+  @Index()
   createdBy: number;
 
   @ManyToOne(() => AdminUser, { onDelete: "CASCADE" })

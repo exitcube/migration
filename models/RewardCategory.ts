@@ -14,6 +14,7 @@ export class RewardCategory {
   value: string;
 
   @Column({ nullable: false })
+  @Index()
   createdBy: number;
 
   @ManyToOne(() => AdminUser, { onDelete: "CASCADE" })

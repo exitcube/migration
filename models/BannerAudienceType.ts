@@ -18,6 +18,7 @@ export class BannerAudienceType {
   id: number;
 
   @Column({ nullable: true })
+  @Index()
   bannerId: number;
 
   @ManyToOne(() => Banner, { onDelete: "CASCADE" })
@@ -25,6 +26,7 @@ export class BannerAudienceType {
   banner: Banner;
 
   @Column({ nullable: true })
+  @Index()
   bannerConfigId: number;
 
   @ManyToOne(() => BannerUserTargetConfig, { onDelete: "CASCADE" })

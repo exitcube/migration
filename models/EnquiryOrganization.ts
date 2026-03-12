@@ -20,6 +20,7 @@ export class EnquiryOrganization {
   id: number; // internal auto-increment id (good for sorting)
 
   @Column({ nullable: true })
+  @Index()
   ownerId: number;
 
   @ManyToOne(() => EnquiryOwner, { onDelete: "CASCADE" })
