@@ -36,6 +36,7 @@ export class Vendor {
   lastActive: Date;
 
   @Column({ nullable: true })
+  @Index()
   profilePicId: number;
 
   @OneToOne(() => VendorFile, { onDelete: "CASCADE" })

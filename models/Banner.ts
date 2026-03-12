@@ -9,6 +9,7 @@ export class Banner {
   id: number;
 
   @Column({ nullable: true })
+  @Index()
   bgImageId: number;
 
   @OneToOne(() => AdminFile, { onDelete: "CASCADE" })
@@ -19,6 +20,7 @@ export class Banner {
   title: string;
 
   @Column({ nullable: true })
+  @Index()
   categoryId: number;
 
   @ManyToOne(() => BannerCategory, { onDelete: "CASCADE" })
@@ -52,6 +54,7 @@ export class Banner {
   endTime: Date;
 
   @Column({ nullable: true })
+  @Index()
   createdBy: number;
 
   @ManyToOne(() => AdminUser, { onDelete: "CASCADE" })
@@ -59,6 +62,7 @@ export class Banner {
   createdByAdminUser: AdminUser;
 
   @Column({ nullable: true })
+  @Index()
   updatedBy: number;
 
   @ManyToOne(() => AdminUser, { onDelete: "CASCADE" })
@@ -75,6 +79,7 @@ export class Banner {
   rejectReason: string;
 
   @Column({ nullable: true })
+  @Index()
   approvedBy: number;
 
   @ManyToOne(() => AdminUser, { onDelete: "CASCADE" })
@@ -82,6 +87,7 @@ export class Banner {
   approvedByAdminUser: AdminUser;
 
   @Column({ nullable: true })
+  @Index()
   removedBy: number;
 
   @ManyToOne(() => AdminUser, { onDelete: "CASCADE" })

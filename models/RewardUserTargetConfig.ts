@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   JoinColumn,
   ManyToOne,
+  Index,
 } from "typeorm";
 import { AdminUser } from "../models";
 
@@ -39,6 +40,7 @@ export class RewardUserTargetConfig {
   isActive: boolean;
 
   @Column({ nullable: false })
+  @Index()
   createdBy: number;
 
   @ManyToOne(() => AdminUser, { onDelete: "CASCADE" })

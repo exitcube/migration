@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn,Column,CreateDateColumn,UpdateDateColumn,JoinColumn,ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn,Column,CreateDateColumn,UpdateDateColumn,JoinColumn,ManyToOne, Index } from "typeorm";
 import { AdminFile } from "./AdminFile";
 
 @Entity("serviceList")
@@ -13,6 +13,7 @@ export class ServiceList {
     value:string;
 
     @Column({ nullable: true })
+    @Index()
     image:string;
     
     @ManyToOne(() => AdminFile, { onDelete: "CASCADE" })

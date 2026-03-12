@@ -7,6 +7,7 @@ import {
     OneToOne,
     JoinColumn,
     ManyToOne,
+    Index,
     
 } from 'typeorm';
 
@@ -25,6 +26,7 @@ export class Service {
     displayName: string;
 
     @Column({ nullable: true })
+    @Index()
     imageId: number;
 
     @OneToOne(() => AdminFile, { onDelete: "CASCADE" })
@@ -53,6 +55,7 @@ export class Service {
     updatedAt: Date;
 
     @Column({ nullable: false })
+    @Index()
     createdBy: number;
 
     @ManyToOne(() => AdminUser, { onDelete: "CASCADE" })
@@ -60,6 +63,7 @@ export class Service {
     createdByAdminUser: AdminUser;
 
     @Column({ nullable: true })
+    @Index()
     removedBy: number;
 
     @ManyToOne(() => AdminUser, { onDelete: "CASCADE" })
