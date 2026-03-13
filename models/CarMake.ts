@@ -9,6 +9,9 @@ export class CarMake {
   @Column()
   name: string;
 
+  @Column({ nullable: true })
+  tier: string;
+
   @Column({ default: true })
   isActive: boolean;
 
