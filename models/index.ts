@@ -38,6 +38,7 @@ import { VendorOrgOtp } from "./VendorOrgOtp";
 import { EnquiryOrganization } from "./EnquiryOrganization";
 import { EnquiryOwner } from "./EnquiryOwner";
 import { RequestCall } from "./RequestCall";
+import { VendorAddress } from "./VendorAddress";
 // import { Product } from './Product';
 
 // Entities owned by this microservice (managed by migrations here)
@@ -82,6 +83,7 @@ export const entities = [
   EnquiryOrganization,
   EnquiryOwner,
   RequestCall,
+  VendorAddress
   // Product,
 ];
 
@@ -126,4 +128,5 @@ export { VendorOrgOtp, type VendorOrgOtp as VendorOrgOtpType } from "./VendorOrg
 export { EnquiryOrganization,type EnquiryOrganization as EnquiryOrganizationType} from "./EnquiryOrganization";
 export { EnquiryOwner,type EnquiryOwner as EnquiryOwnerType} from "./EnquiryOwner";
 export { RequestCall,type RequestCall as RequestCallType} from "./RequestCall";
+export {VendorAddress,type VendorAddress as VendorAddressType} from "./VendorAddress";
 // export { Product, type Product as ProductType } from './Product';

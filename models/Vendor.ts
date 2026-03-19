@@ -46,27 +46,6 @@ export class Vendor {
   @Column({ nullable: false }) 
   vendorCode: string;
 
-  @Column({ nullable: true })
-  address: string;
-
-  @Column({length: 100,nullable: true })
-  country: string;
-
-  @Column({length: 100 ,nullable: true})
-  city: string;
-
-  @Column({ length: 100,nullable: true })
-  state: string;
-
-  @Column({length: 20,nullable: true })
-  pinCode: string;
-
-  @Column({ type: 'decimal', precision: 10, scale: 5, nullable: false })
-  latitude: number;
-
-  @Column({ type: 'decimal', precision: 10, scale: 5, nullable: false })
-  longitude: number;
-
   @Column({ nullable: true})  
   openingTime: string;
 
@@ -84,6 +63,9 @@ export class Vendor {
 
   @Column({ nullable: true })
   buisnessExperience: string;
+
+  @Column({ default: false })
+  isVerified: boolean;
 
   @Column({ default: false })
   isActive: boolean;

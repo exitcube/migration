@@ -29,6 +29,9 @@ export class VendorOrganization {
     @Column({ nullable: true })
     accountStatus: string;
 
+    @Column({ default: false })
+    isVerified: boolean;
+
     @Column({ type: "timestamp", nullable: true })
     lastActive: Date;
 
